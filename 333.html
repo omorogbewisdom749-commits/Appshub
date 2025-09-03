@@ -1,0 +1,704 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppsHub - Add Your Apps</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --gray: #6c757d;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .search-container {
+            display: flex;
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            width: 300px;
+        }
+
+        .search-container input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 0.5rem;
+        }
+
+        .search-container button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3') center/cover no-repeat;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(67, 97, 238, 0.8), rgba(58, 12, 163, 0.8));
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: var(--secondary);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .app-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .app-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .app-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .app-card:hover .app-img img {
+            transform: scale(1.1);
+        }
+
+        .app-content {
+            padding: 1.5rem;
+        }
+
+        .app-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .app-category {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .app-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-rating {
+            color: #ffc107;
+        }
+
+        .download-btn {
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background: var(--secondary);
+        }
+
+        .add-app-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: var(--success);
+        }
+
+        .footer-links a {
+            display: block;
+            color: #ddd;
+            margin-bottom: 0.8rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .add-app-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fas fa-mobile-alt"></i>
+                AppsHub
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Categories</a>
+                <a href="#">Top Apps</a>
+                <a href="#">New Releases</a>
+                <a href="#">Add Your App</a>
+            </div>
+            <div class="search-container">
+                <input type="text" placeholder="Search apps...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Add Your App to AppsHub</h1>
+            <p>Showcase your app to thousands of potential users. Submit your app details below to get featured.</p>
+            <a href="#add-app" class="btn">Add Your App</a>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Recently Added Apps</h2>
+        
+        <div class="filters">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">Productivity</button>
+            <button class="filter-btn">Social</button>
+            <button class="filter-btn">Games</button>
+            <button class="filter-btn">Health</button>
+            <button class="filter-btn">Education</button>
+        </div>
+
+        <div class="apps-grid">
+            <!-- App 1 -->
+            <div class="app-card">
+                <div class="app-img">
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3" alt="Socialize App">
+                </div>
+                <div class="app-content">
+                    <h3 class="app-title">Socialize</h3>
+                    <span class="app-category">Social Media</span>
+                    <p class="app-description">Connect with friends and share your life moments with our intuitive social media app.</p>
+                    <div class="app-meta">
+                        <div class="app-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            4.5
+                        </div>
+                        <button class="download-btn">Download</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App 2 -->
+            <div class="app-card">
+                <div class="app-img">
+                    <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3" alt="ProductiveMind App">
+                </div>
+                <div class="app-content">
+                    <h3 class="app-title">ProductiveMind</h3>
+                    <span class="app-category">Productivity</span>
+                    <p class="app-description">Boost your productivity with our smart task manager and focus timer all in one app.</p>
+                    <div class="app-meta">
+                        <div class="app-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            4.0
+                        </div>
+                        <button class="download-btn">Download</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- App 3 -->
+            <div class="app-card">
+                <div class="app-img">
+                    <img src="https://images.unsplash.com/photo-1610337673044-720471f83677?ixlib=rb-4.0.3" alt="FitLife App">
+                </div>
+                <div class="app-content">
+                    <h3 class="app-title">FitLife</h3>
+                    <span class="app-category">Health & Fitness</span>
+                    <p class="app-description">Track your workouts, nutrition, and health goals with our comprehensive fitness app.</p>
+                    <div class="app-meta">
+                        <div class="app-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            4.8
+                        </div>
+                        <button class="download-btn">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="add-app" class="add-app-section">
+            <h2 class="form-title">Add Your App</h2>
+            <form id="app-form">
+                <div class="form-group">
+                    <label for="app-name">App Name</label>
+                    <input type="text" id="app-name" placeholder="Enter your app name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="app-category">Category</label>
+                    <select id="app-category" required>
+                        <option value="">Select a category</option>
+                        <option value="Productivity">Productivity</option>
+                        <option value="Social">Social Media</option>
+                        <option value="Games">Games</option>
+                        <option value="Health">Health & Fitness</option>
+                        <option value="Education">Education</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Utilities">Utilities</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="app-description">Description</label>
+                    <textarea id="app-description" placeholder="Describe your app and its features" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="app-image">Image URL</label>
+                    <input type="url" id="app-image" placeholder="Paste a link to your app image" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="app-rating">Rating (0-5)</label>
+                    <input type="number" id="app-rating" min="0" max="5" step="0.1" placeholder="4.5" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="app-download">Download Link</label>
+                    <input type="url" id="app-download" placeholder="Link to download your app" required>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Your App</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About AppsHub</h3>
+                <p>We're dedicated to helping you discover the best apps for your smartphone, tablet, and computer.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">Categories</a>
+                    <a href="#">Top Apps</a>
+                    <a href="#">New Releases</a>
+                    <a href="#">Add Your App</a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> contact@appshub.com</p>
+                <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                <p><i class="fas fa-map-marker-alt"></i> San Francisco, CA</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 AppsHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // In a real implementation, you would filter the apps here
+                    // For this example, we'll just log the filter category
+                    console.log('Filtering by: ' + this.textContent);
+                });
+            });
+            
+            // Add hover effect to app cards
+            const appCards = document.querySelectorAll('.app-card');
+            appCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Handle form submission
+            const appForm = document.getElementById('app-form');
+            appForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('app-name').value;
+                const category = document.getElementById('app-category').value;
+                const description = document.getElementById('app-description').value;
+                const imageUrl = document.getElementById('app-image').value;
+                const rating = document.getElementById('app-rating').value;
+                
+                // Create new app card
+                const appsGrid = document.querySelector('.apps-grid');
+                const newAppCard = document.createElement('div');
+                newAppCard.className = 'app-card';
+                newAppCard.innerHTML = `
+                    <div class="app-img">
+                        <img src="${imageUrl}" alt="${name}">
+                    </div>
+                    <div class="app-content">
+                        <h3 class="app-title">${name}</h3>
+                        <span class="app-category">${category}</span>
+                        <p class="app-description">${description}</p>
+                        <div class="app-meta">
+                            <div class="app-rating">
+                                ${generateStarRating(rating)}
+                                ${rating}
+                            </div>
+                            <button class="download-btn">Download</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add hover effect to new card
+                newAppCard.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                newAppCard.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                // Add to the beginning of the grid
+                appsGrid.prepend(newAppCard);
+                
+                // Show success message
+                alert('Your app has been added successfully!');
+                
+                // Reset form
+                appForm.reset();
+            });
+            
+            // Helper function to generate star rating HTML
+            function generateStarRating(rating) {
+                let stars = '';
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 >= 0.5;
+                
+                for (let i = 0; i < fullStars; i++) {
+                    stars += '<i class="fas fa-star"></i>';
+                }
+                
+                if (hasHalfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                }
+                
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) {
+                    stars += '<i class="far fa-star"></i>';
+                }
+                
+                return stars;
+            }
+        });
+    </script>
+</body>
+</html>
